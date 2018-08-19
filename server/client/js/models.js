@@ -13,7 +13,7 @@ export class Person {
 // Stores relationships + pairs name
 export class Relationship {
   constructor(kind, pair) {
-    this.kind = type;
+    this.kind = kind;
     this.pair = pair
   }
 }

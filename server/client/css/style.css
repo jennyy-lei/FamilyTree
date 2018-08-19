@@ -138,7 +138,8 @@ input[type='radio'] {
 	width: 100%;
 	height: calc(100% - 80px);
 	position: absolute;
-	bottom: -100%;
+	top: 100%;
+	transition: 0.3s;
 }
 
 #edit-sidebar {

@@ -2,6 +2,8 @@ import {Person, Relationship} from "./models.js";
 
 const people = [];
 
+window.people = people;
+
 var add_person_btn = document.getElementById('submit-person');
 
 var expand_form_btn = document.getElementById('expand-form');
@@ -85,11 +87,18 @@ create_relation_btn.onclick = function() {
     }
   }
 
-  people[selected_card].relationships.push(new relationship);
-  people[selected_card].relationships[relationships.length - 1].kind = selectedType;
-  people[selected_card].relationships[relationships.length - 1].pair = pairIndex;
+  addRelation( selected_card, selectedType, pairIndex );
 
   // 4. find pair and add opposite relation to them
+  addRelation( pairIndex, oppositeRelation(selectedType), selected_card )
+}
+
+function addRelation( card, selectedType, pairIndex ) {
+  people[card].relationships.push(new Relationship);
+  var numOfRelations = people[card].relationships.length;
+
+  people[card].relationships[numOfRelations - 1].kind = selectedType;
+  people[card].relationships[numOfRelations - 1].pair = pairIndex;
 }
 
 function oppositeRelation( kind ) {
