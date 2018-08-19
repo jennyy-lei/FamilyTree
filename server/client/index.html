@@ -49,7 +49,8 @@
             <input type="text" name="lname">
             <p>Year Born:</p>
             <input type="number" name="born">
-            <input type="button" value="SAVE" id="submit-person">
+            <input type="button" value="SAVE" id="save-edit">
+            <p class="warning" id="saved-text">SAVED</p>
           </fieldset>
         </form>
       </div>
@@ -73,14 +74,10 @@
               <p>Pair:</p>
               <input type="text" name="pair">
 
-              <input type="radio" name="type" value="mother">Mother<br>
-              <input type="radio" name="type" value="father">Father<br>
-              <input type="radio" name="type" value="daughter">Daughter<br>
-              <input type="radio" name="type" value="son">Son<br>
-              <input type="radio" name="type" value="brother">Brother<br>
-              <input type="radio" name="type" value="sister">Sister<br>
+              <input type="radio" name="type" value="parent">Parent<br>
+              <input type="radio" name="type" value="child">Child<br>
 
-              <p id="warning">Person does not exist!</p>
+              <p id="warning" class="warning">Person does not exist!</p>
 
               <input type="button" value="CREATE"> <br>
               <input type="button" value="CANCEL">
@@ -91,13 +88,13 @@
     </div>
 
     <div id="map-container">
-      <div class="card" style="left: 500px ; top:500px">
+      <!-- <div class="card" style="left: 500px ; top:500px">
         <p class="card-name">Jenny Lei</p>
         <p class="card-born">2001</p>
         <div class="edit-btn">
           <img src="res/edit.svg">
         </div>
-      </div>
+      </div> -->
     </div>
     <script src="js/app.js" type="module"></script>
   </body>

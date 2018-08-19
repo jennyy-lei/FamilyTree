@@ -2,7 +2,7 @@
 
 // Person object
 export class Person {
-  constructor( fname, lname, born ) {
+  constructor(fname, lname, born) {
     this.fname = fname;
     this.lname = lname;
     this.born = born;
@@ -12,8 +12,8 @@ export class Person {
 
 // Stores relationships + pairs name
 export class Relationship {
-  constructor( type, pair ) {
-    this.type = type;
+  constructor(kind, pair) {
+    this.kind = type;
     this.pair = pair
   }
 }
