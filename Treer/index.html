@@ -1,104 +1,104 @@
 <!DOCTYPE html>
 
 <html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="style.css">
-	</head>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
 
-	<body>
-		<!-- FIXED HEADER AREA -->
-		<h1>Family Tree</h1>
+  <body>
+    <!-- FIXED HEADER AREA -->
+    <h1>Family Tree</h1>
 
-		<div id="expand-form">
-			<img src="add.svg"/>
-		</div>
+    <div id="expand-form">
+      <img src="res/add.svg"/>
+    </div>
 
-		<!-- ADD PERSON FORM: -->
-		<div id="add-person-container">
-			<form id="add-person-form">
-				<fieldset>
-					<legend>Information:</legend>
-					<p>First Name:</p>
-					<input type="text" name="fname">
-					<p>Last Name:</p>
-					<input type="text" name="lname">
-					<p>Year Born:</p>
-					<input type="number" name="born">
-					<input type="button" value="ADD" id="submit-person">
-					<input type="button" value="CLOSE" id="close-form">
-				</fieldset>
-			</form>
-		</div>
+    <!-- ADD PERSON FORM: -->
+    <div id="add-person-container">
+      <form id="add-person-form">
+        <fieldset>
+          <legend>Information:</legend>
+          <p>First Name:</p>
+          <input type="text" name="fname">
+          <p>Last Name:</p>
+          <input type="text" name="lname">
+          <p>Year Born:</p>
+          <input type="number" name="born">
+          <input type="button" value="ADD" id="submit-person">
+          <input type="button" value="CLOSE" id="close-form">
+        </fieldset>
+      </form>
+    </div>
 
-		<!-- DIV AREA: -->
-		<div id="edit-container">
-			<div id="edit-sidebar">
-				<ul>
-					<li class="edit-sidebar-items" style="font-weight: normal;">Information</li>
-					<li class="edit-sidebar-items ">Relations</li>
-				</ul>
-			</div>
+    <!-- DIV AREA: -->
+    <div id="edit-container">
+      <div id="edit-sidebar">
+        <ul>
+          <li class="edit-sidebar-items" style="font-weight: normal;">Information</li>
+          <li class="edit-sidebar-items ">Relations</li>
+        </ul>
+      </div>
 
-			<div id="edit-information" class="edit-area" style="visibility: visible; opacity: 1;">
-				<form id="edit-person-form">
-					<fieldset>
-						<legend>Information:</legend>
-						<p>First Name:</p>
-						<input type="text" name="fname">
-						<p>Last Name:</p>
-						<input type="text" name="lname">
-						<p>Year Born:</p>
-						<input type="number" name="born">
-						<input type="button" value="SAVE" id="submit-person">
-					</fieldset>
-				</form>
-			</div>
+      <div id="edit-information" class="edit-area" style="visibility: visible; opacity: 1;">
+        <form id="edit-person-form">
+          <fieldset>
+            <legend>Information:</legend>
+            <p>First Name:</p>
+            <input type="text" name="fname">
+            <p>Last Name:</p>
+            <input type="text" name="lname">
+            <p>Year Born:</p>
+            <input type="number" name="born">
+            <input type="button" value="SAVE" id="submit-person">
+          </fieldset>
+        </form>
+      </div>
 
-			<div id="edit-relations" class="edit-area">
-				<div id="relations-list" class="relations" style="visibility: visible; opacity: 1;">
-					<div id="show-create-relations">
-						<img src="add.svg" id="add-relation-btn">
-					</div>
-					<table>
-						<tr>
-							<td>Person:</td>
-							<td>Type:</td>
-						</tr>
-					</table>
-				</div>
-				<div id="create-relations-container" class="relations">
-					<form>
-						<fieldset>
-							<legend>Create relation:</legend>
-							<p>Pair:</p>
-							<input type="text" name="pair">
+      <div id="edit-relations" class="edit-area">
+        <div id="relations-list" class="relations" style="visibility: visible; opacity: 1;">
+          <div id="show-create-relations">
+            <img src="res/add.svg" id="add-relation-btn">
+          </div>
+          <table>
+            <tr>
+              <td>Person:</td>
+              <td>Type:</td>
+            </tr>
+          </table>
+        </div>
+        <div id="create-relations-container" class="relations">
+          <form>
+            <fieldset>
+              <legend>Create relation:</legend>
+              <p>Pair:</p>
+              <input type="text" name="pair">
 
-							<input type="radio" name="type" value="mother">Mother<br>
-							<input type="radio" name="type" value="father">Father<br>
-							<input type="radio" name="type" value="daughter">Daughter<br>
-							<input type="radio" name="type" value="son">Son<br>
-							<input type="radio" name="type" value="brother">Brother<br>
-							<input type="radio" name="type" value="sister">Sister<br>
+              <input type="radio" name="type" value="mother">Mother<br>
+              <input type="radio" name="type" value="father">Father<br>
+              <input type="radio" name="type" value="daughter">Daughter<br>
+              <input type="radio" name="type" value="son">Son<br>
+              <input type="radio" name="type" value="brother">Brother<br>
+              <input type="radio" name="type" value="sister">Sister<br>
 
-							<p id="warning">Person does not exist!</p>
+              <p id="warning">Person does not exist!</p>
 
-							<input type="button" value="CREATE"> <br>
-							<input type="button" value="CANCEL">
-						</fieldset>
-					</form>
-				</div>
-			</div>
-		</div>
+              <input type="button" value="CREATE"> <br>
+              <input type="button" value="CANCEL">
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
 
-		<div id="map-container">
-<div class="card" style="left: 500px ; top:500px">
-		<p class="card-name">Jenny Lei</p>
-		<p class="card-born">2001</p>
-		<div class="edit-btn">
-			<img src="edit.svg">
-		</div>
-		</div>
-		</div>
-		<script src="app.js"></script>
-	</body>
+    <div id="map-container">
+      <div class="card" style="left: 500px ; top:500px">
+        <p class="card-name">Jenny Lei</p>
+        <p class="card-born">2001</p>
+        <div class="edit-btn">
+          <img src="res/edit.svg">
+        </div>
+      </div>
+    </div>
+    <script src="js/app.js"></script>
+  </body>
 </html>
