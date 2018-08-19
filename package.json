@@ -1,0 +1,22 @@
+{
+  "name": "familytree",
+  "version": "1.0.0",
+  "description": "Family tree builder",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jennyy-lei/FamilyTree.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jennyy-lei/FamilyTree/issues"
+  },
+  "homepage": "https://github.com/jennyy-lei/FamilyTree#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
