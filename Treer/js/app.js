@@ -10,8 +10,8 @@ class person {
 
 // Stores relationships + pairs name
 class relationship {
-  constructor( type, pair ) {
-    this.type = type;
+  constructor( kind, pair ) {
+    this.kind = kind;
     this.pair = pair
   }
 }
@@ -36,12 +36,10 @@ var edit_pages = document.getElementsByClassName('edit-area');
 var add_relation_btn = document.getElementById('show-create-relations');
 
 window.onload = function() {
-  openEditScreen();
   changeSidebar();
 }
 
 expand_form_btn.onclick = function() {
-  console.log("formfrom!");
   add_person_container.style.right = 0;
 }
 
@@ -54,6 +52,7 @@ add_person_btn.onclick = function() {
   clearForm();
   createCard();
   closeForm();
+  openEditScreen();
 }
 
 // Opens create relation screen
@@ -71,11 +70,13 @@ var create_relation_btn = document.querySelectorAll('input[value="CREATE"]')[0];
 create_relation_btn.onclick = function() {
   console.log("sakhg");
   var pair = document.getElementsByName('pair')[0].value;
+  var pairIndex = null;
   var exists = false;
 
   // 1. check for presence of pair -> make sure they exist -> if not show warning message
   for( var i = 0; i < people.length; i++ ){
     if(pair.toLowerCase() == people[i].fname.toLowerCase() + " " + people[i].lname.toLowerCase()) {
+      pairIndex = i;
       console.log('found person!');
       exists = true;
       break;
@@ -91,7 +92,27 @@ create_relation_btn.onclick = function() {
   // 2. check if this relation already exists -> dont show warning, but dont add either
   // 3. if present, add relation to relations list in person class
 
+  // Get selected relationship
+  var selectedType = '';
+  var radio_btns = document.getElementsByName('type');
+  for (var i = 0; i < radio_btns.length; i++) {
+    if (radio_btns[i].checked) {
+      selectedType = radio_btns[i].value;
+    }
+  }
+
+  people[selected_card].relationships.push(new relationship);
+  people[selected_card].relationships[relationships.length - 1].kind = selectedType;
+  people[selected_card].relationships[relationships.length - 1].pair = pairIndex;
+
   // 4. find pair and add opposite relation to them
+}
+
+function oppositeRelation( kind ) {
+  switch( kind ) {
+    case 'parent': return 'child';
+    case 'child': return 'parent';
+  }
 }
 
 function changeSidebar() {
@@ -115,6 +136,7 @@ function changeSidebar() {
 }
 
 function openEditScreen() {
+  console.log("arg");
   for (var i = 0; i < people.length; i++) {
     edit_btn[0].onclick = function() {
       console.log("open sesame");
@@ -122,8 +144,14 @@ function openEditScreen() {
         if (edit_btn[j] == this) selected_card = j;
       }
       document.getElementById('edit-container').style.top = '80px';
+      fillSelectedInformation();
     }
   }
+}
+
+document.getElementById('save-edit').onclick = function() {
+  setPersonInformation( selected_card, 1 );
+  document.getElementById('saved-text').style.opacity = '1';
 }
 
 // Creates a new person object
@@ -132,9 +160,7 @@ function createPerson() {
 
   var index = people.length;
 
-  people[index - 1].fname = document.getElementsByName('fname')[0].value;
-  people[index - 1].lname = document.getElementsByName('lname')[0].value;
-  people[index - 1].born = document.getElementsByName('born')[0].value;
+  setPersonInformation( index - 1, 0 )
 }
 
 // Closes the Add Person tab
@@ -157,6 +183,18 @@ function clearForm() {
   }
 }
 
+function fillSelectedInformation() {
+  document.getElementsByName('fname')[1].value = people[selected_card].fname;
+  document.getElementsByName('lname')[1].value = people[selected_card].lname;
+  document.getElementsByName('born')[1].value = people[selected_card].born;
+}
+
+function setPersonInformation( index, x ) {
+  people[index].fname = document.getElementsByName('fname')[x].value;
+  people[index].lname = document.getElementsByName('lname')[x].value;
+  people[index].born = document.getElementsByName('born')[x].value;
+}
+
 
 // Creates person card
 function createCard() {
@@ -170,7 +208,7 @@ function createCard() {
     <p class="card-name">' + people[people.length - 1].fname + ' ' + people[people.length - 1].lname + '</p>\
     <p class="card-born">' + people[people.length - 1].born + '</p>\
     <div class="edit-btn">\
-      <img src="edit.svg">\
+      <img src="res/edit.svg">\
     </div>\
     </div>'
 }
