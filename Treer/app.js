@@ -167,10 +167,10 @@ function createCard() {
 
 
 	map_container.innerHTML += '<div class="card" style="left:' + pos_x + 'px ; top:' + pos_y + 'px">\
-		<p class="card-name">' + people[people.length - 1].fname + ' ' + people[people.length - 1].lname + '</p>\
-		<p class="card-born">' + people[people.length - 1].born + '</p>\
-		<div class="edit-btn">\
-			<img src="edit.svg">\
-		</div>\
+			<p class="card-name">' + people[people.length - 1].fname + ' ' + people[people.length - 1].lname + '</p>\
+			<p class="card-born">' + people[people.length - 1].born + '</p>\
+			<div class="edit-btn">\
+				<img src="edit.svg">\
+			</div>\
 		</div>'
 }
