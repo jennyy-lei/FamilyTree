@@ -61,7 +61,7 @@ create_relation_btn.onclick = function() {
 
   // 1. check for presence of pair -> make sure they exist -> if not show warning message
   for( let i = 0; i < people.length; i++ ){
-    if(pair.toLowerCase() == people[i].fname.toLowerCase() + " " + people[i].lname.toLowerCase()) {
+    if(pair.toLowerCase() == people[i].firstName.toLowerCase() + " " + people[i].lastName.toLowerCase()) {
       pairIndex = i;
       console.log('found person!');
       exists = true;
@@ -111,7 +111,7 @@ function oppositeRelation( kind ) {
 function changeSidebar() {
   for (let i = 0; i < edit_sidebar_items.length; i++) {
     edit_sidebar_items[i].onclick = function() {
-  console.log("hello");
+      console.log("hello");
 
       for (let j = 0; j < edit_sidebar_items.length; j++) {
         edit_sidebar_items[j].style.fontWeight = "300";
@@ -177,14 +177,14 @@ function clearForm() {
 }
 
 function fillSelectedInformation() {
-  document.getElementsByName('fname')[1].value = people[selected_card].fname;
-  document.getElementsByName('lname')[1].value = people[selected_card].lname;
+  document.getElementsByName('firstName')[1].value = people[selected_card].firstName;
+  document.getElementsByName('lastName')[1].value = people[selected_card].lastName;
   document.getElementsByName('born')[1].value = people[selected_card].born;
 }
 
 function setPersonInformation( index, x ) {
-  people[index].fname = document.getElementsByName('fname')[x].value;
-  people[index].lname = document.getElementsByName('lname')[x].value;
+  people[index].firstName = document.getElementsByName('firstName')[x].value;
+  people[index].lastName = document.getElementsByName('lastName')[x].value;
   people[index].born = document.getElementsByName('born')[x].value;
 }
 
@@ -198,7 +198,7 @@ function createCard() {
 
 
   map_container.innerHTML += '<div class="card" style="left:' + pos_x + 'px ; top:' + pos_y + 'px">\
-    <p class="card-name">' + people[people.length - 1].fname + ' ' + people[people.length - 1].lname + '</p>\
+    <p class="card-name">' + people[people.length - 1].firstName + ' ' + people[people.length - 1].lastName + '</p>\
     <p class="card-born">' + people[people.length - 1].born + '</p>\
     <div class="edit-btn">\
       <img src="res/edit.svg">\
