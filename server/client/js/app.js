@@ -4,22 +4,22 @@ const people = [];
 
 window.people = people;
 
-var add_person_btn = document.getElementById('submit-person');
+let add_person_btn = document.getElementById('submit-person');
 
-var expand_form_btn = document.getElementById('expand-form');
-var close_form_btn = document.getElementById('close-form')
-var add_person_container = document.getElementById('add-person-container');
+let expand_form_btn = document.getElementById('expand-form');
+let close_form_btn = document.getElementById('close-form')
+let add_person_container = document.getElementById('add-person-container');
 
-var map_container = document.getElementById('map-container');
-var map_card = document.getElementsByClassName('card');
+let map_container = document.getElementById('map-container');
+let map_card = document.getElementsByClassName('card');
 
-var edit_btn = document.getElementsByClassName('edit-btn');
-var selected_card = null;
+let edit_btn = document.getElementsByClassName('edit-btn');
+let selected_card = null;
 
-var edit_sidebar_items = document.getElementsByClassName('edit-sidebar-items');
-var edit_pages = document.getElementsByClassName('edit-area');
+let edit_sidebar_items = document.getElementsByClassName('edit-sidebar-items');
+let edit_pages = document.getElementsByClassName('edit-area');
 
-var add_relation_btn = document.getElementById('show-create-relations');
+let add_relation_btn = document.getElementById('show-create-relations');
 
 window.onload = function() {
   changeSidebar();
@@ -51,16 +51,16 @@ add_relation_btn.onclick = function() {
   document.getElementsByClassName('relations')[1].style.visibility = 'visible';
 }
 
-var create_relation_btn = document.querySelectorAll('input[value="CREATE"]')[0];
+let create_relation_btn = document.querySelectorAll('input[value="CREATE"]')[0];
 
 create_relation_btn.onclick = function() {
   console.log("sakhg");
-  var pair = document.getElementsByName('pair')[0].value;
-  var pairIndex = null;
-  var exists = false;
+  let pair = document.getElementsByName('pair')[0].value;
+  let pairIndex = null;
+  let exists = false;
 
   // 1. check for presence of pair -> make sure they exist -> if not show warning message
-  for( var i = 0; i < people.length; i++ ){
+  for( let i = 0; i < people.length; i++ ){
     if(pair.toLowerCase() == people[i].fname.toLowerCase() + " " + people[i].lname.toLowerCase()) {
       pairIndex = i;
       console.log('found person!');
@@ -79,9 +79,9 @@ create_relation_btn.onclick = function() {
   // 3. if present, add relation to relations list in person class
 
   // Get selected relationship
-  var selectedType = '';
-  var radio_btns = document.getElementsByName('type');
-  for (var i = 0; i < radio_btns.length; i++) {
+  let selectedType = '';
+  let radio_btns = document.getElementsByName('type');
+  for (let i = 0; i < radio_btns.length; i++) {
     if (radio_btns[i].checked) {
       selectedType = radio_btns[i].value;
     }
@@ -95,7 +95,7 @@ create_relation_btn.onclick = function() {
 
 function addRelation( card, selectedType, pairIndex ) {
   people[card].relationships.push(new Relationship);
-  var numOfRelations = people[card].relationships.length;
+  let numOfRelations = people[card].relationships.length;
 
   people[card].relationships[numOfRelations - 1].kind = selectedType;
   people[card].relationships[numOfRelations - 1].pair = pairIndex;
@@ -109,16 +109,16 @@ function oppositeRelation( kind ) {
 }
 
 function changeSidebar() {
-  for (var i = 0; i < edit_sidebar_items.length; i++) {
+  for (let i = 0; i < edit_sidebar_items.length; i++) {
     edit_sidebar_items[i].onclick = function() {
   console.log("hello");
 
-      for (var j = 0; j < edit_sidebar_items.length; j++) {
+      for (let j = 0; j < edit_sidebar_items.length; j++) {
         edit_sidebar_items[j].style.fontWeight = "300";
         edit_pages[j].style.opacity = "0";
         edit_pages[j].style.visibility = "hidden";
 
-        if (edit_sidebar_items[j] == this) var index = j;
+        if (edit_sidebar_items[j] == this) let index = j;
       }
 
       this.style.fontWeight = "normal";
@@ -130,10 +130,10 @@ function changeSidebar() {
 
 function openEditScreen() {
   console.log("arg");
-  for (var i = 0; i < people.length; i++) {
+  for (let i = 0; i < people.length; i++) {
     edit_btn[0].onclick = function() {
       console.log("open sesame");
-      for (var j = 0; j < people.length; j++) {
+      for (let j = 0; j < people.length; j++) {
         if (edit_btn[j] == this) selected_card = j;
       }
       document.getElementById('edit-container').style.top = '80px';
@@ -151,7 +151,7 @@ document.getElementById('save-edit').onclick = function() {
 function createPerson() {
   people.push(new Person);
 
-  var index = people.length;
+  let index = people.length;
 
   setPersonInformation( index - 1, 0 )
 }
@@ -163,9 +163,9 @@ function closeForm() {
 
 // Clears previous information in form
 function clearForm() {
-  var inputs = document.getElementsByTagName('input');
+  let inputs = document.getElementsByTagName('input');
 
-  for (var i = 0; i < inputs.length; i++) {
+  for (let i = 0; i < inputs.length; i++) {
       switch (inputs[i].type) {
       case 'text':
           inputs[i].value = '';
@@ -191,10 +191,10 @@ function setPersonInformation( index, x ) {
 
 // Creates person card
 function createCard() {
-  var map_width = map_container.clientHeight;
-  var map_height = map_container.clientHeight;
-  var pos_x = map_width / 2 - 90;
-  var pos_y = map_height / 2 - 40;
+  let map_width = map_container.clientHeight;
+  let map_height = map_container.clientHeight;
+  let pos_x = map_width / 2 - 90;
+  let pos_y = map_height / 2 - 40;
 
 
   map_container.innerHTML += '<div class="card" style="left:' + pos_x + 'px ; top:' + pos_y + 'px">\
