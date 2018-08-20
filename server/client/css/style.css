@@ -87,6 +87,11 @@ input[type='radio'] {
 	top: 0;
 }
 
+.map-canvas {
+	height: 100%;
+	width: 100%;
+}
+
 .warning {
 	opacity: 0;
 	transition: opacity 0.5s;
