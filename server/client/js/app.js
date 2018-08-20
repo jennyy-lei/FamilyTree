@@ -4,36 +4,36 @@ const people = [];
 
 window.people = people;
 
-let add_person_btn = document.getElementById('submit-person');
+let addPersonBtn = document.getElementById('submit-person');
 
-let expand_form_btn = document.getElementById('expand-form');
-let close_form_btn = document.getElementById('close-form')
-let add_person_container = document.getElementById('add-person-container');
+let expandFormBtn = document.getElementById('expand-form');
+let closeFormBtn = document.getElementById('close-form')
+let addPersonContainer = document.getElementById('add-person-container');
 
-let map_container = document.getElementById('map-container');
-let map_card = document.getElementsByClassName('card');
+let mapContainer = document.getElementById('map-container');
+let mapCard = document.getElementsByClassName('card');
 
-let edit_btn = document.getElementsByClassName('edit-btn');
-let selected_card = null;
+let editBtn = document.getElementsByClassName('edit-btn');
+let selectedCard = null;
 
-let edit_sidebar_items = document.getElementsByClassName('edit-sidebar-items');
-let edit_pages = document.getElementsByClassName('edit-area');
+let editSidebarItems = document.getElementsByClassName('edit-sidebar-items');
+let editPages = document.getElementsByClassName('edit-area');
 
-let add_relation_btn = document.getElementById('show-create-relations');
+let addRelationBtn = document.getElementById('show-create-relations');
 
 window.onload = function() {
   changeSidebar();
 }
 
-expand_form_btn.onclick = function() {
-  add_person_container.style.right = 0;
+expandFormBtn.onclick = function() {
+  addPersonContainer.style.right = 0;
 }
 
-close_form_btn.onclick = function() {
+closeFormBtn.onclick = function() {
   closeForm();
 }
 
-add_person_btn.onclick = function() {
+addPersonBtn.onclick = function() {
   createPerson();
   clearForm();
   createCard();
@@ -42,7 +42,7 @@ add_person_btn.onclick = function() {
 }
 
 // Opens create relation screen
-add_relation_btn.onclick = function() {
+addRelationBtn.onclick = function() {
   console.log("open relations");
   document.getElementsByClassName('relations')[0].style.opacity = 0;
   document.getElementsByClassName('relations')[0].style.visibility = 'hidden';
@@ -51,9 +51,9 @@ add_relation_btn.onclick = function() {
   document.getElementsByClassName('relations')[1].style.visibility = 'visible';
 }
 
-let create_relation_btn = document.querySelectorAll('input[value="CREATE"]')[0];
+let createRelationBtn = document.querySelectorAll('input[value="CREATE"]')[0];
 
-create_relation_btn.onclick = function() {
+createRelationBtn.onclick = function() {
   console.log("sakhg");
   let pair = document.getElementsByName('pair')[0].value;
   let pairIndex = null;
@@ -80,17 +80,17 @@ create_relation_btn.onclick = function() {
 
   // Get selected relationship
   let selectedType = '';
-  let radio_btns = document.getElementsByName('type');
-  for (let i = 0; i < radio_btns.length; i++) {
-    if (radio_btns[i].checked) {
-      selectedType = radio_btns[i].value;
+  let radioBtns = document.getElementsByName('type');
+  for (let i = 0; i < radioBtns.length; i++) {
+    if (radioBtns[i].checked) {
+      selectedType = radioBtns[i].value;
     }
   }
 
-  addRelation( selected_card, selectedType, pairIndex );
+  addRelation( selectedCard, selectedType, pairIndex );
 
   // 4. find pair and add opposite relation to them
-  addRelation( pairIndex, oppositeRelation(selectedType), selected_card )
+  addRelation( pairIndex, oppositeRelation(selectedType), selectedCard )
 }
 
 function addRelation( card, selectedType, pairIndex ) {
@@ -109,23 +109,23 @@ function oppositeRelation( kind ) {
 }
 
 function changeSidebar() {
-  for (let i = 0; i < edit_sidebar_items.length; i++) {
-    edit_sidebar_items[i].onclick = function() {
+  for (let i = 0; i < editSidebarItems.length; i++) {
+    editSidebarItems[i].onclick = function() {
       console.log("hello");
 
       let index = -1;
 
-      for (let j = 0; j < edit_sidebar_items.length; j++) {
-        edit_sidebar_items[j].style.fontWeight = "300";
-        edit_pages[j].style.opacity = "0";
-        edit_pages[j].style.visibility = "hidden";
+      for (let j = 0; j < editSidebarItems.length; j++) {
+        editSidebarItems[j].style.fontWeight = "300";
+        editPages[j].style.opacity = "0";
+        editPages[j].style.visibility = "hidden";
 
-        if (edit_sidebar_items[j] == this) index = j;
+        if (editSidebarItems[j] == this) index = j;
       }
 
       this.style.fontWeight = "normal";
-      edit_pages[index].style.opacity = "1";
-      edit_pages[index].style.visibility = "visible";
+      editPages[index].style.opacity = "1";
+      editPages[index].style.visibility = "visible";
     }
   }
 }
@@ -133,10 +133,10 @@ function changeSidebar() {
 function openEditScreen() {
   console.log("arg");
   for (let i = 0; i < people.length; i++) {
-    edit_btn[0].onclick = function() {
+    editBtn[0].onclick = function() {
       console.log("open sesame");
       for (let j = 0; j < people.length; j++) {
-        if (edit_btn[j] == this) selected_card = j;
+        if (editBtn[j] == this) selectedCard = j;
       }
       document.getElementById('edit-container').style.top = '80px';
       fillSelectedInformation();
@@ -145,7 +145,7 @@ function openEditScreen() {
 }
 
 document.getElementById('save-edit').onclick = function() {
-  setPersonInformation( selected_card, 1 );
+  setPersonInformation( selectedCard, 1 );
   document.getElementById('saved-text').style.opacity = '1';
 }
 
@@ -160,7 +160,7 @@ function createPerson() {
 
 // Closes the Add Person tab
 function closeForm() {
-  add_person_container.style.right = '-20%';
+  addPersonContainer.style.right = '-20%';
 }
 
 // Clears previous information in form
@@ -179,9 +179,9 @@ function clearForm() {
 }
 
 function fillSelectedInformation() {
-  document.getElementsByName('fname')[1].value = people[selected_card].firstName;
-  document.getElementsByName('lname')[1].value = people[selected_card].lastName;
-  document.getElementsByName('born')[1].value = people[selected_card].born;
+  document.getElementsByName('fname')[1].value = people[selectedCard].firstName;
+  document.getElementsByName('lname')[1].value = people[selectedCard].lastName;
+  document.getElementsByName('born')[1].value = people[selectedCard].born;
 }
 
 function setPersonInformation( index, x ) {
@@ -193,13 +193,13 @@ function setPersonInformation( index, x ) {
 
 // Creates person card
 function createCard() {
-  let map_width = map_container.clientHeight;
-  let map_height = map_container.clientHeight;
-  let pos_x = map_width / 2 - 90;
-  let pos_y = map_height / 2 - 40;
+  let mapWidth = mapContainer.clientHeight;
+  let mapHeight = mapContainer.clientHeight;
+  let posX = mapWidth / 2 - 90;
+  let posY = mapHeight / 2 - 40;
 
 
-  map_container.innerHTML += '<div class="card" style="left:' + pos_x + 'px ; top:' + pos_y + 'px">\
+  mapContainer.innerHTML += '<div class="card" style="left:' + posX + 'px ; top:' + posY + 'px">\
     <p class="card-name">' + people[people.length - 1].firstName + ' ' + people[people.length - 1].lastName + '</p>\
     <p class="card-born">' + people[people.length - 1].born + '</p>\
     <div class="edit-btn">\
