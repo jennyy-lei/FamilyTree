@@ -149,6 +149,10 @@ document.getElementById('save-edit').onclick = function() {
   document.getElementById('saved-text').style.opacity = '1';
 }
 
+document.getElementById('close-edit').onclick = function() {
+  document.getElementById('edit-container').style.top = '100%';
+}
+
 // Creates a new person object
 function createPerson() {
   people.push(new Person);
