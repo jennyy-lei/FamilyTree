@@ -113,12 +113,14 @@ function changeSidebar() {
     edit_sidebar_items[i].onclick = function() {
       console.log("hello");
 
+      let index = -1;
+
       for (let j = 0; j < edit_sidebar_items.length; j++) {
         edit_sidebar_items[j].style.fontWeight = "300";
         edit_pages[j].style.opacity = "0";
         edit_pages[j].style.visibility = "hidden";
 
-        if (edit_sidebar_items[j] == this) let index = j;
+        if (edit_sidebar_items[j] == this) index = j;
       }
 
       this.style.fontWeight = "normal";
@@ -177,14 +179,14 @@ function clearForm() {
 }
 
 function fillSelectedInformation() {
-  document.getElementsByName('firstName')[1].value = people[selected_card].firstName;
-  document.getElementsByName('lastName')[1].value = people[selected_card].lastName;
+  document.getElementsByName('fname')[1].value = people[selected_card].firstName;
+  document.getElementsByName('lname')[1].value = people[selected_card].lastName;
   document.getElementsByName('born')[1].value = people[selected_card].born;
 }
 
 function setPersonInformation( index, x ) {
-  people[index].firstName = document.getElementsByName('firstName')[x].value;
-  people[index].lastName = document.getElementsByName('lastName')[x].value;
+  people[index].firstName = document.getElementsByName('fname')[x].value;
+  people[index].lastName = document.getElementsByName('lname')[x].value;
   people[index].born = document.getElementsByName('born')[x].value;
 }
 
