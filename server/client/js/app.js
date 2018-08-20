@@ -60,8 +60,8 @@ createRelationBtn.onclick = function() {
   let exists = false;
 
   // 1. check for presence of pair -> make sure they exist -> if not show warning message
-  for( let i = 0; i < people.length; i++ ){
-    if(pair.toLowerCase() == people[i].firstName.toLowerCase() + " " + people[i].lastName.toLowerCase()) {
+  for (let i = 0; i < people.length; i++){
+    if (pair.toLowerCase() == people[i].firstName.toLowerCase() + " " + people[i].lastName.toLowerCase()) {
       pairIndex = i;
       console.log('found person!');
       exists = true;
@@ -69,7 +69,7 @@ createRelationBtn.onclick = function() {
     }
   }
 
-  if(!exists) {
+  if (!exists) {
     document.getElementById('warning').style.opacity = 1;
     return;
   } else {
@@ -87,13 +87,13 @@ createRelationBtn.onclick = function() {
     }
   }
 
-  addRelation( selectedCard, selectedType, pairIndex );
+  addRelation(selectedCard, selectedType, pairIndex);
 
   // 4. find pair and add opposite relation to them
-  addRelation( pairIndex, oppositeRelation(selectedType), selectedCard )
+  addRelation(pairIndex, oppositeRelation(selectedType), selectedCard)
 }
 
-function addRelation( card, selectedType, pairIndex ) {
+function addRelation(card, selectedType, pairIndex) {
   people[card].relationships.push(new Relationship);
   let numOfRelations = people[card].relationships.length;
 
@@ -101,8 +101,8 @@ function addRelation( card, selectedType, pairIndex ) {
   people[card].relationships[numOfRelations - 1].pair = pairIndex;
 }
 
-function oppositeRelation( kind ) {
-  switch( kind ) {
+function oppositeRelation(kind) {
+  switch (kind) {
     case 'parent': return 'child';
     case 'child': return 'parent';
   }
@@ -145,17 +145,14 @@ function openEditScreen() {
 }
 
 document.getElementById('save-edit').onclick = function() {
-  setPersonInformation( selectedCard, 1 );
+  setPersonInformation(selectedCard, 1);
   document.getElementById('saved-text').style.opacity = '1';
 }
 
 // Creates a new person object
 function createPerson() {
   people.push(new Person);
-
-  let index = people.length;
-
-  setPersonInformation( index - 1, 0 )
+  setPersonInformation(people.length - 1, 0);
 }
 
 // Closes the Add Person tab
@@ -184,7 +181,7 @@ function fillSelectedInformation() {
   document.getElementsByName('born')[1].value = people[selectedCard].born;
 }
 
-function setPersonInformation( index, x ) {
+function setPersonInformation(index, x) {
   people[index].firstName = document.getElementsByName('fname')[x].value;
   people[index].lastName = document.getElementsByName('lname')[x].value;
   people[index].born = document.getElementsByName('born')[x].value;
@@ -198,12 +195,15 @@ function createCard() {
   let posX = mapWidth / 2 - 90;
   let posY = mapHeight / 2 - 40;
 
-
-  mapContainer.innerHTML += '<div class="card" style="left:' + posX + 'px ; top:' + posY + 'px">\
-    <p class="card-name">' + people[people.length - 1].firstName + ' ' + people[people.length - 1].lastName + '</p>\
-    <p class="card-born">' + people[people.length - 1].born + '</p>\
-    <div class="edit-btn">\
-      <img src="res/edit.svg">\
-    </div>\
-    </div>'
+  mapContainer.innerHTML += `<div class="card" style="left:${posX}px;top:${posY}px">
+        <p class="card-name">
+          ${people[people.length - 1].firstName} ${people[people.length - 1].lastName}
+        </p>
+        <p class="card-born">
+          ${people[people.length - 1].born}
+        </p>
+        <div class="edit-btn">
+          <img src="res/edit.svg">
+        </div>
+      </div>`;
 }
