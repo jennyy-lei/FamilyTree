@@ -91,6 +91,34 @@ create_relation_btn.onclick = function() {
 
   // 4. find pair and add opposite relation to them
   addRelation( pairIndex, oppositeRelation(selectedType), selected_card )
+
+  // 5. Exits create relations form
+  document.getElementsByClassName('relations')[1].style.opacity = 0;
+  document.getElementsByClassName('relations')[1].style.visibility = 'hidden';
+
+  document.getElementsByClassName('relations')[0].style.opacity = 1;
+  document.getElementsByClassName('relations')[0].style.visibility = 'visible';
+
+  // 6. Refreshes relationships table
+  loadRelationsTable();
+}
+
+function loadRelationsTable() {
+  let relationsLength = people[selected_card].relationships.length;
+  let table = document.getElementById('relations-table');
+
+  for (let i = 0; i < relationsLength; i++) {
+    let pair = people[selected_card].relationships[i].pair;
+    
+    table.innerHTML = `<tr>
+        <td>Person:</td>
+        <td>Type:</td>
+      </tr>
+      <tr>
+        <td>${people[pair].firstName} ${people[pair].lastName}</td>
+        <td>${people[selected_card].relationships.kind}</td>
+      <tr>`
+  }
 }
 
 function addRelation( card, selectedType, pairIndex ) {
@@ -131,15 +159,15 @@ function changeSidebar() {
 }
 
 function openEditScreen() {
-  console.log("arg");
   for (let i = 0; i < people.length; i++) {
-    edit_btn[0].onclick = function() {
+    edit_btn[i].onclick = function() {
       console.log("open sesame");
       for (let j = 0; j < people.length; j++) {
         if (edit_btn[j] == this) selected_card = j;
       }
       document.getElementById('edit-container').style.top = '80px';
       fillSelectedInformation();
+      loadRelationsTable();
     }
   }
 }
@@ -151,6 +179,8 @@ document.getElementById('save-edit').onclick = function() {
 
 document.getElementById('close-edit').onclick = function() {
   document.getElementById('edit-container').style.top = '100%';
+  document.getElementById('saved-text').style.opacity = 0;
+  document.getElementById('warning').style.opacity = 0;
 }
 
 // Creates a new person object

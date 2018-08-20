@@ -220,12 +220,19 @@ input[type='radio'] {
 	width: 100%;
 }
 
-#create-relations-container, #relations {
+#relations-table td {
+	padding: 10px;
+}
+
+.relations {
+	transition: visibility 1s, opacity 1s;
+}
+
+#create-relations-container {
 	height: 100%;
 	width: 100%;
 	visibility: hidden;
 	opacity: 0;
-	transition: visibility 1s, opacity 1s;
 }
 
 #show-create-relations {
