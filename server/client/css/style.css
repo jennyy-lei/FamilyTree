@@ -30,7 +30,7 @@ h1 {
 	margin: 15px;
 	height: 50px;
 	width: 50px;
-	background-color: lightgrey;
+	/*background-color: white;*/
 	cursor: pointer;
 }
 
@@ -100,7 +100,7 @@ input[type='radio'] {
 	height: 80px;
 	background-color: white;
 	position: absolute;
-	border: 1px solid slategrey;
+	border: none;
 	border-radius: 3px;
 	display: flex;
 	justify-content: center;

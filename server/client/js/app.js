@@ -21,6 +21,46 @@ let edit_pages = document.getElementsByClassName('edit-area');
 
 let add_relation_btn = document.getElementById('show-create-relations');
 
+let cy = cytoscape({
+  container: document.getElementById('map-container'),
+
+  elements: [
+  //   {data:{id:'a'}},
+  //   {data:{id:'b'}}
+  ],
+
+  style: [
+  {
+    selector: 'node',
+    style: {
+      'content': 'data(name)',
+      'background-color': 'white',
+      'text-halign': 'center',
+      'text-valign': 'center',
+      'shape': 'roundrectangle',
+      'width': '50px',
+      'height': '25px',
+      'border-width': '1px',
+      'border-style': 'solid',
+      'border-color': 'lightgrey',
+      'font-family': 'Lato',
+      'font-weight': '300',
+      'font-size': '20',
+      'padding': '15'
+    }
+  },
+  {
+    selector: 'edge',
+    style: {
+      'width': 3,
+      'line-color': '#ccc',
+      'target-arrow-color': '#ccc',
+      'target-arrow-shape': 'triangle'
+    }
+  }
+  ],
+})
+
 window.onload = function() {
   changeSidebar();
 }
@@ -38,7 +78,7 @@ add_person_btn.onclick = function() {
   clearForm();
   createCard();
   closeForm();
-  openEditScreen();
+  // openEditScreen();
 }
 
 // Opens create relation screen
@@ -221,23 +261,37 @@ function fillSelectedInformation() {
 function setPersonInformation( index, x ) {
   people[index].firstName = document.getElementsByName('fname')[x].value;
   people[index].lastName = document.getElementsByName('lname')[x].value;
-  people[index].born = document.getElementsByName('born')[x].value;
+  people[index].dateOfBirth = document.getElementsByName('born')[x].value;
 }
 
 
 // Creates person card
 function createCard() {
-  let map_width = map_container.clientHeight;
-  let map_height = map_container.clientHeight;
-  let pos_x = map_width / 2 - 90;
-  let pos_y = map_height / 2 - 40;
+  // let map_width = map_container.clientHeight;
+  // let map_height = map_container.clientHeight;
+  // // let pos_x = map_width / 2 - 90;
+  // // let pos_y = map_height / 2 - 40;
+  // let pos_x = Math.random() * window.innerWidth;
+  // let pos_y = Math.random() * window.innerHeight;
 
 
-  map_container.innerHTML += '<div class="card" style="left:' + pos_x + 'px ; top:' + pos_y + 'px">\
-    <p class="card-name">' + people[people.length - 1].firstName + ' ' + people[people.length - 1].lastName + '</p>\
-    <p class="card-born">' + people[people.length - 1].born + '</p>\
-    <div class="edit-btn">\
-      <img src="res/edit.svg">\
-    </div>\
-    </div>'
+  // map_container.innerHTML += '<div class="card" style="left:' + pos_x + 'px ; top:' + pos_y + 'px">\
+  //   <p class="card-name">' + people[people.length - 1].firstName + ' ' + people[people.length - 1].lastName + '</p>\
+  //   <p class="card-born">' + people[people.length - 1].born + '</p>\
+  //   <div class="edit-btn">\
+  //     <img src="res/edit.svg">\
+  //   </div>\
+  //   </div>'
+
+console.log(people[people.length - 1].firstName);
+  cy.add([
+      {
+        data: {
+          id: people.length,
+          name: people[people.length - 1].firstName
+        },
+        position: { x: 500, y: 500}
+      }
+    ])
 }
+
