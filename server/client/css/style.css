@@ -30,7 +30,7 @@ h1 {
 	margin: 15px;
 	height: 50px;
 	width: 50px;
-	background-color: lightgrey;
+	/*background-color: white;*/
 	cursor: pointer;
 }
 
@@ -105,7 +105,7 @@ input[type='radio'] {
 	height: 80px;
 	background-color: white;
 	position: absolute;
-	border: 1px solid slategrey;
+	border: none;
 	border-radius: 3px;
 	display: flex;
 	justify-content: center;
@@ -225,12 +225,19 @@ input[type='radio'] {
 	width: 100%;
 }
 
-#create-relations-container, #relations {
+#relations-table td {
+	padding: 10px;
+}
+
+.relations {
+	transition: visibility 1s, opacity 1s;
+}
+
+#create-relations-container {
 	height: 100%;
 	width: 100%;
 	visibility: hidden;
 	opacity: 0;
-	transition: visibility 1s, opacity 1s;
 }
 
 #show-create-relations {

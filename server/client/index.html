@@ -64,7 +64,7 @@
           <div id="show-create-relations">
             <img src="res/add.svg" id="add-relation-btn">
           </div>
-          <table>
+          <table id="relations-table">
             <tr>
               <td>Person:</td>
               <td>Type:</td>
@@ -83,8 +83,7 @@
 
               <p id="warning" class="warning">Person does not exist!</p>
 
-              <input type="button" value="CREATE"> <br>
-              <input type="button" value="CANCEL">
+              <input type="button" value="CREATE">
             </fieldset>
           </form>
         </div>
@@ -94,6 +93,7 @@
     <div id="map-container">
       <canvas id="mapCanvas" class="map-canvas"></canvas>
     </div>
+    <script src="js/cytoscape.js" type="text/javascript"></script>
     <script src="js/app.js" type="module"></script>
   </body>
 </html>

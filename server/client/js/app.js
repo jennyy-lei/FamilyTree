@@ -24,6 +24,46 @@ let editPages = document.getElementsByClassName('edit-area');
 
 let addRelationBtn = document.getElementById('show-create-relations');
 
+let cy = cytoscape({
+  container: document.getElementById('map-container'),
+
+  elements: [
+  //   {data:{id:'a'}},
+  //   {data:{id:'b'}}
+  ],
+
+  style: [
+  {
+    selector: 'node',
+    style: {
+      'content': 'data(name)',
+      'background-color': 'white',
+      'text-halign': 'center',
+      'text-valign': 'center',
+      'shape': 'roundrectangle',
+      'width': '50px',
+      'height': '25px',
+      'border-width': '1px',
+      'border-style': 'solid',
+      'border-color': 'lightgrey',
+      'font-family': 'Lato',
+      'font-weight': '300',
+      'font-size': '20',
+      'padding': '15'
+    }
+  },
+  {
+    selector: 'edge',
+    style: {
+      'width': 3,
+      'line-color': '#ccc',
+      'target-arrow-color': '#ccc',
+      'target-arrow-shape': 'triangle'
+    }
+  }
+  ],
+})
+
 window.onload = function() {
   changeSidebar();
 }
@@ -41,7 +81,7 @@ addPersonBtn.onclick = function() {
   clearForm();
   createCard();
   closeForm();
-  openEditScreen();
+  // openEditScreen();
 }
 
 // Opens create relation screen
@@ -93,14 +133,41 @@ createRelationBtn.onclick = function() {
   addRelation(selectedCard, selectedType, pairIndex);
 
   // 4. find pair and add opposite relation to them
-  addRelation(pairIndex, oppositeRelation(selectedType), selectedCard)
+  addRelation(pairIndex, oppositeRelation(selectedType), selected_card);
+
+  // 5. Exits create relations form
+  document.getElementsByClassName('relations')[1].style.opacity = 0;
+  document.getElementsByClassName('relations')[1].style.visibility = 'hidden';
+
+  document.getElementsByClassName('relations')[0].style.opacity = 1;
+  document.getElementsByClassName('relations')[0].style.visibility = 'visible';
+
+  // 6. Refreshes relationships table
+  loadRelationsTable();
+}
+
+function loadRelationsTable() {
+  let relationsLength = people[selected_card].relationships.length;
+  let table = document.getElementById('relations-table');
+
+  for (let i = 0; i < relationsLength; i++) {
+    let pair = people[selected_card].relationships[i].pair;
+
+    table.innerHTML = `<tr>
+        <td>Person:</td>
+        <td>Type:</td>
+      </tr>
+      <tr>
+        <td>${people[pair].firstName} ${people[pair].lastName}</td>
+        <td>${people[selected_card].relationships.kind}</td>
+      <tr>`;
+  }
 }
 
 function addRelation(card, selectedType, pairIndex) {
   people[card].relationships.push(new Relationship);
   let numOfRelations = people[card].relationships.length;
 
-  people[card].relationships[numOfRelations - 1].kind = selectedType;
   people[card].relationships[numOfRelations - 1].pair = pairIndex;
 }
 
@@ -134,15 +201,15 @@ function changeSidebar() {
 }
 
 function openEditScreen() {
-  console.log("arg");
   for (let i = 0; i < people.length; i++) {
-    editBtn[0].onclick = function() {
+    edit_btn[i].onclick = function() {
       console.log("open sesame");
       for (let j = 0; j < people.length; j++) {
         if (editBtn[j] == this) selectedCard = j;
       }
       document.getElementById('edit-container').style.top = '80px';
       fillSelectedInformation();
+      loadRelationsTable();
     }
   }
 }
@@ -155,6 +222,8 @@ document.getElementById('save-edit').onclick = function() {
 
 document.getElementById('close-edit').onclick = function() {
   document.getElementById('edit-container').style.top = '100%';
+  document.getElementById('saved-text').style.opacity = 0;
+  document.getElementById('warning').style.opacity = 0;
 }
 
 // Creates a new person object
@@ -194,26 +263,36 @@ function fillSelectedInformation() {
 function setPersonInformation(index, x) {
   people[index].firstName = document.getElementsByName('fname')[x].value;
   people[index].lastName = document.getElementsByName('lname')[x].value;
-  people[index].born = document.getElementsByName('born')[x].value;
+  people[index].dateOfBirth = document.getElementsByName('born')[x].value;
 }
 
 
 // Creates person card
 function createCard() {
-  let mapWidth = mapContainer.clientHeight;
-  let mapHeight = mapContainer.clientHeight;
-  let posX = mapWidth / 2 - 90;
-  let posY = mapHeight / 2 - 40;
+  // let map_width = map_container.clientHeight;
+  // let map_height = map_container.clientHeight;
+  // // let pos_x = map_width / 2 - 90;
+  // // let pos_y = map_height / 2 - 40;
+  // let pos_x = Math.random() * window.innerWidth;
+  // let pos_y = Math.random() * window.innerHeight;
 
-  mapContainer.innerHTML += `<div class="card" style="left:${posX}px;top:${posY}px">
-        <p class="card-name">
-          ${people[people.length - 1].firstName} ${people[people.length - 1].lastName}
-        </p>
-        <p class="card-born">
-          ${people[people.length - 1].born}
-        </p>
-        <div class="edit-btn">
-          <img src="res/edit.svg">
-        </div>
-      </div>`;
+
+  // map_container.innerHTML += '<div class="card" style="left:' + pos_x + 'px ; top:' + pos_y + 'px">\
+  //   <p class="card-name">' + people[people.length - 1].firstName + ' ' + people[people.length - 1].lastName + '</p>\
+  //   <p class="card-born">' + people[people.length - 1].born + '</p>\
+  //   <div class="edit-btn">\
+  //     <img src="res/edit.svg">\
+  //   </div>\
+  //   </div>'
+
+console.log(people[people.length - 1].firstName);
+  cy.add([
+      {
+        data: {
+          id: people.length,
+          name: people[people.length - 1].firstName
+        },
+        position: { x: 500, y: 500}
+      }
+    ])
 }
