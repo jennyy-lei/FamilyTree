@@ -1,8 +1,11 @@
 import {Person, Relationship} from "./models.js";
+import {GraphRenderer} from "./graph_renderer.js";
 
 const people = [];
 
 window.people = people;
+
+let graphRenderer = new GraphRenderer(document.getElementById('mapCanvas'), people);
 
 let addPersonBtn = document.getElementById('submit-person');
 
@@ -147,6 +150,7 @@ function openEditScreen() {
 document.getElementById('save-edit').onclick = function() {
   setPersonInformation(selectedCard, 1);
   document.getElementById('saved-text').style.opacity = '1';
+  graphRenderer.redraw();
 }
 
 document.getElementById('close-edit').onclick = function() {
@@ -157,6 +161,8 @@ document.getElementById('close-edit').onclick = function() {
 function createPerson() {
   people.push(new Person);
   setPersonInformation(people.length - 1, 0);
+
+  graphRenderer.redraw();
 }
 
 // Closes the Add Person tab
