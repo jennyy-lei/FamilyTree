@@ -1,10 +1,14 @@
-import {Person, Relationship} from "./models.js";
-import {GraphRenderer} from "./graph_renderer.js";
+import {Person, Relationship} from './models.js';
+import {GraphRenderer} from './graph_renderer.js';
+import {PersonRepository} from './person_repository.js';
 
+// Deprecated, use personRepository instead.
 const people = [];
+const personRepository = new PersonRepository();
 
 // For debug purposes.
 window.people = people;
+window.personRepository = personRepository;
 
 let addPersonBtn = document.getElementById('submit-person');
 
@@ -165,10 +169,10 @@ function loadRelationsTable() {
 }
 
 function addRelation(card, selectedType, pairIndex) {
-  people[card].relationships.push(new Relationship(selectedType));
-  let numOfRelations = people[card].relationships.length;
-
-  people[card].relationships[numOfRelations - 1].pair = pairIndex;
+  const person = people[card];
+  const newRelationship = person.addRelationship(
+      new Relationship(selectedType, pairIndex));
+  personRepository.addRelationship(newRelationship);
 }
 
 function oppositeRelation(kind) {
@@ -235,7 +239,7 @@ function createPerson() {
       personData.firstName,
       personData.lastName,
       personData.dateOfBirth);
-  people.push(person);
+  personRepository.addPerson(person);
   return person;
 }
 

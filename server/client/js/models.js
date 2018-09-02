@@ -4,25 +4,31 @@
 export class Person {
   constructor(
       fname, lname, dateOfBirth,
-      {relationships = [], id} = {}) {
+      {relationships = new Map(), id} = {}) {
 
     this.firstName = fname;
     this.lastName = lname;
     this.dateOfBirth = dateOfBirth;
-    this.relationships = relationships;
+    this._relationships = relationships;
     // If no ID is supplied, assign a unique ID to the person, so it
     // can be easily referenced.
     this.id = id || personIdGenerator.next().value;
   }
 
   addRelationship(relationship) {
-    this.relationships.push(relationship);
+    relationship.leftId = this.id;
+    this._relationships[relationship.rightId] = relationship;
+    return relationship;
   }
+
+  get relationships() { return this._relationships.values(); }
 }
 
 // Stores relationships + pairs name
 export class Relationship {
-  constructor(kind, leftId, rightId, {metadata = {}, id} = {}) {
+  constructor(
+      kind, rightId,
+      {leftId, metadata = new Map(), id} = {}) {
     this.kind = kind;
     this.leftId = leftId;
     this.rightId = rightId;

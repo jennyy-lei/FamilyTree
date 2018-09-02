@@ -5,7 +5,7 @@
 // relationships and doing lookups.
 export class PersonRepository {
   constructor() {
-    this._people = {};
+    this._people = new Map();
     this.relationships = [];
   }
 
@@ -34,4 +34,11 @@ export class PersonRepository {
   }
 
   get people() { return this._people.values(); }
+
+  getPerson(id) { return this._people[id]; }
+
+  // Add convenience methods here:
+  getChildrenOf(personId) { return null; }
+  getParentsOf(personId) { return null; }
+  getSiblingsOf(personId) { return null; }
 }
