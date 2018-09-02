@@ -5,8 +5,6 @@ const people = [];
 
 window.people = people;
 
-let graphRenderer = new GraphRenderer(document.getElementById('mapCanvas'), people);
-
 let addPersonBtn = document.getElementById('submit-person');
 
 let expandFormBtn = document.getElementById('expand-form');
@@ -18,6 +16,7 @@ let mapCard = document.getElementsByClassName('card');
 
 let editBtn = document.getElementsByClassName('edit-btn');
 let selectedCard = null;
+let selectedPerson = undefined;
 
 let editSidebarItems = document.getElementsByClassName('edit-sidebar-items');
 let editPages = document.getElementsByClassName('edit-area');
@@ -28,8 +27,8 @@ let cy = cytoscape({
   container: document.getElementById('map-container'),
 
   elements: [
-  //   {data:{id:'a'}},
-  //   {data:{id:'b'}}
+    // {data:{id:'a'}},
+    // {data:{id:'b'}}
   ],
 
   style: [
@@ -165,7 +164,7 @@ function loadRelationsTable() {
 }
 
 function addRelation(card, selectedType, pairIndex) {
-  people[card].relationships.push(new Relationship);
+  people[card].relationships.push(new Relationship(selectedType));
   let numOfRelations = people[card].relationships.length;
 
   people[card].relationships[numOfRelations - 1].pair = pairIndex;
@@ -202,11 +201,14 @@ function changeSidebar() {
 
 function openEditScreen() {
   for (let i = 0; i < people.length; i++) {
-    edit_btn[i].onclick = function() {
+    editBtn[i].onclick = function() {
       console.log("open sesame");
       for (let j = 0; j < people.length; j++) {
         if (editBtn[j] == this) selectedCard = j;
       }
+      selectedPerson = people.find(function (person) {
+        return
+      });
       document.getElementById('edit-container').style.top = '80px';
       fillSelectedInformation();
       loadRelationsTable();
@@ -217,7 +219,6 @@ function openEditScreen() {
 document.getElementById('save-edit').onclick = function() {
   setPersonInformation(selectedCard, 1);
   document.getElementById('saved-text').style.opacity = '1';
-  graphRenderer.redraw();
 }
 
 document.getElementById('close-edit').onclick = function() {
@@ -230,8 +231,6 @@ document.getElementById('close-edit').onclick = function() {
 function createPerson() {
   people.push(new Person);
   setPersonInformation(people.length - 1, 0);
-
-  graphRenderer.redraw();
 }
 
 // Closes the Add Person tab
@@ -292,7 +291,7 @@ console.log(people[people.length - 1].firstName);
           id: people.length,
           name: people[people.length - 1].firstName
         },
-        position: { x: 500, y: 500}
+        position: { x: 500, y: 200}
       }
     ])
 }

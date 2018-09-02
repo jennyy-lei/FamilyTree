@@ -2,7 +2,7 @@
 
 // Person object
 export class Person {
-  constructor(fname, lname, dateOfBirth, {relationships = [], id}) {
+  constructor(fname, lname, dateOfBirth, {relationships = [], id} = {}) {
     this.firstName = fname;
     this.lastName = lname;
     this.dateOfBirth = dateOfBirth;
@@ -19,7 +19,7 @@ export class Person {
 
 // Stores relationships + pairs name
 export class Relationship {
-  constructor(kind, leftId, rightId, {metadata = {}, id}) {
+  constructor(kind, leftId, rightId, {metadata = {}, id} = {}) {
     this.kind = kind;
     this.children = children;
     this.metadata = metadata;
@@ -35,5 +35,5 @@ function * idGenerator(startIndex) {
   while (true) yield startIndex--;
 }
 
-let relationshipIdGenerator = idGenerator(0);
-let personIdGenerator = idGenerator(0);
+let relationshipIdGenerator = idGenerator(-1);
+let personIdGenerator = idGenerator(-1);
