@@ -3,6 +3,7 @@ import {GraphRenderer} from "./graph_renderer.js";
 
 const people = [];
 
+// For debug purposes.
 window.people = people;
 
 let addPersonBtn = document.getElementById('submit-person');
@@ -76,9 +77,9 @@ closeFormBtn.onclick = function() {
 }
 
 addPersonBtn.onclick = function() {
-  createPerson();
+  const createdPerson = createPerson();
   clearForm();
-  createCard();
+  createCard(createdPerson);
   closeForm();
   // openEditScreen();
 }
@@ -229,8 +230,13 @@ document.getElementById('close-edit').onclick = function() {
 
 // Creates a new person object
 function createPerson() {
-  people.push(new Person);
-  setPersonInformation(people.length - 1, 0);
+  const personData = getPersonInformation(0);
+  const person = new Person(
+      personData.firstName,
+      personData.lastName,
+      personData.dateOfBirth);
+  people.push(person);
+  return person;
 }
 
 // Closes the Add Person tab
@@ -260,14 +266,22 @@ function fillSelectedInformation() {
 }
 
 function setPersonInformation(index, x) {
-  people[index].firstName = document.getElementsByName('fname')[x].value;
-  people[index].lastName = document.getElementsByName('lname')[x].value;
-  people[index].dateOfBirth = document.getElementsByName('born')[x].value;
+  const personData = getPersonInformation(x);
+  people[index].firstName = personData.firstName;
+  people[index].lastName = personData.lastName;
+  people[index].dateOfBirth = personData.dateOfBirth;
 }
 
+function getPersonInformation(x) {
+  return {
+    'firstName': document.getElementsByName('fname')[x].value,
+    'lastName': document.getElementsByName('lname')[x].value,
+    'dateOfBirth': document.getElementsByName('born')[x].value,
+  };
+}
 
 // Creates person card
-function createCard() {
+function createCard(person) {
   // let map_width = map_container.clientHeight;
   // let map_height = map_container.clientHeight;
   // // let pos_x = map_width / 2 - 90;
@@ -284,12 +298,11 @@ function createCard() {
   //   </div>\
   //   </div>'
 
-console.log(people[people.length - 1].firstName);
   cy.add([
       {
         data: {
-          id: people.length,
-          name: people[people.length - 1].firstName
+          id: person.id,
+          name: person.firstName
         },
         position: { x: 500, y: 200}
       }

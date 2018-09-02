@@ -2,7 +2,10 @@
 
 // Person object
 export class Person {
-  constructor(fname, lname, dateOfBirth, {relationships = [], id} = {}) {
+  constructor(
+      fname, lname, dateOfBirth,
+      {relationships = [], id} = {}) {
+
     this.firstName = fname;
     this.lastName = lname;
     this.dateOfBirth = dateOfBirth;
@@ -21,7 +24,8 @@ export class Person {
 export class Relationship {
   constructor(kind, leftId, rightId, {metadata = {}, id} = {}) {
     this.kind = kind;
-    this.children = children;
+    this.leftId = leftId;
+    this.rightId = rightId;
     this.metadata = metadata;
     // If no ID is supplied, assign a unique ID to the relationship,
     // so it can be easily referenced.
