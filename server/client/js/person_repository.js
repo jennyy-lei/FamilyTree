@@ -1,8 +1,8 @@
 'use strict';
 
-// Stores all people and relationships between those people within
-// in the application. Provides convenience methods for managing
-// relationships and doing lookups.
+// Stores all people and relationships between those people within in the
+// application. Provides convenience methods for managing relationships and
+// doing lookups.
 export class PersonRepository {
   constructor() {
     this._people = new Map();

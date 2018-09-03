@@ -106,9 +106,11 @@ createRelationBtn.onclick = function() {
   let pairIndex = null;
   let exists = false;
 
-  // 1. check for presence of pair -> make sure they exist -> if not show warning message
+  // 1. check for presence of pair -> make sure they exist -> if not show
+  // warning message
   for (let i = 0; i < people.length; i++){
-    if (pair.toLowerCase() == people[i].firstName.toLowerCase() + " " + people[i].lastName.toLowerCase()) {
+    if (pair.toLowerCase() ==
+        `${people[i].firstName.toLowerCase()} ${people[i].lastName.toLowerCase()}`) {
       pairIndex = i;
       console.log('found person!');
       exists = true;
@@ -122,7 +124,8 @@ createRelationBtn.onclick = function() {
   } else {
     document.getElementById('warning').style.opacity = 0;
   }
-  // 2. check if this relation already exists -> dont show warning, but dont add either
+  // 2. check if this relation already exists -> dont show warning, but dont
+  //    add either
   // 3. if present, add relation to relations list in person class
 
   // Get selected relationship
@@ -286,22 +289,6 @@ function getPersonInformation(x) {
 
 // Creates person card
 function createCard(person) {
-  // let map_width = map_container.clientHeight;
-  // let map_height = map_container.clientHeight;
-  // // let pos_x = map_width / 2 - 90;
-  // // let pos_y = map_height / 2 - 40;
-  // let pos_x = Math.random() * window.innerWidth;
-  // let pos_y = Math.random() * window.innerHeight;
-
-
-  // map_container.innerHTML += '<div class="card" style="left:' + pos_x + 'px ; top:' + pos_y + 'px">\
-  //   <p class="card-name">' + people[people.length - 1].firstName + ' ' + people[people.length - 1].lastName + '</p>\
-  //   <p class="card-born">' + people[people.length - 1].born + '</p>\
-  //   <div class="edit-btn">\
-  //     <img src="res/edit.svg">\
-  //   </div>\
-  //   </div>'
-
   cy.add([
       {
         data: {

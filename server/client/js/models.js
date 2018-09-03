@@ -10,8 +10,8 @@ export class Person {
     this.lastName = lname;
     this.dateOfBirth = dateOfBirth;
     this._relationships = relationships;
-    // If no ID is supplied, assign a unique ID to the person, so it
-    // can be easily referenced.
+    // If no ID is supplied, assign a unique ID to the person, so it can be
+    // easily referenced.
     this.id = id || personIdGenerator.next().value;
   }
 
@@ -33,14 +33,14 @@ export class Relationship {
     this.leftId = leftId;
     this.rightId = rightId;
     this.metadata = metadata;
-    // If no ID is supplied, assign a unique ID to the relationship,
-    // so it can be easily referenced.
+    // If no ID is supplied, assign a unique ID to the relationship, so it can
+    // be easily referenced.
     this.id = id || relationshipIdGenerator.next().value;
   }
 }
 
-// Creates an incrementally decreasing ID starting at startIndex for
-// each successive call of the generator.
+// Creates an incrementally decreasing ID starting at startIndex for each
+// successive call of the generator.
 function * idGenerator(startIndex) {
   while (true) yield startIndex--;
 }
