@@ -46,13 +46,25 @@ export class GraphRenderer {
           }
         }
       ],
+      zoomingEnabled: false
     });
   }
 
   _setUpListeners() {
     const _this = this;
     this.peopleRepository.addPeopleChangeListener(function (event) {
+      // Add any new people as cards to the graph.
       event.added.forEach(_this._createCard.bind(_this));
+
+      // Remove any removed people cards from the graph.
+      event.removed.forEach(_this._removeCard.bind(_this));
+
+      // Relayout.
+      _this.cy
+          .layout({
+            name: 'circle'
+          })
+          .run();
     });
   }
 
@@ -68,8 +80,12 @@ export class GraphRenderer {
           id: person.id,
           name: `${person.firstName} ${person.lastName}`
         },
-        position: { x: 500, y: 200}
+        // position: { x: 500, y: 200}
       }
     ]);
+  }
+
+  _removeCard(person) {
+    this.cy.remove(`#${person.id}`);
   }
 }
