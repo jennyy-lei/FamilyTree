@@ -1,12 +1,14 @@
 'use strict';
 
+import {ObservableMap, ObservableList} from './collections.js';
+
 // Stores all people and relationships between those people within in the
 // application. Provides convenience methods for managing relationships and
 // doing lookups.
 export class PersonRepository {
   constructor() {
-    this._people = new Map();
-    this.relationships = [];
+    this._people = new ObservableMap();
+    this.relationships = new ObservableList();
   }
 
   addPerson(person) {
@@ -15,7 +17,7 @@ export class PersonRepository {
       return false;
     }
 
-    this._people[person.id] = person;
+    this._people.set(person.id, person);
     return true;
   }
 
@@ -27,13 +29,13 @@ export class PersonRepository {
       return false;
     }
 
-    this.relationships.push(relationship);
+    this.relationships.add(relationship);
     return true;
   }
 
   get people() { return this._people.values(); }
 
-  getPerson(id) { return this._people[id]; }
+  getPerson(id) { return this._people.get(id); }
 
   // Add convenience methods here:
   getChildrenOf(personId) { return null; }

@@ -31,8 +31,9 @@ let editPages = document.getElementsByClassName('edit-area');
 let addRelationBtn = document.getElementById('show-create-relations');
 
 graphRenderer.onNodeClick(function () {
-  console.log(this.id());
-  openEditScreen(this.id());
+  let id = parseInt(this.id());
+  console.log(id);
+  openEditScreen(id);
 });
 
 window.onload = function() {
@@ -220,9 +221,10 @@ function clearForm() {
 }
 
 function fillSelectedInformation(id) {
-  document.getElementsByName('fname')[1].value = personRepository._people[id].firstName;
-  document.getElementsByName('lname')[1].value = personRepository._people[id].lastName;
-  document.getElementsByName('born')[1].value = personRepository._people[id].dateOfBirth;
+  let person = personRepository.getPerson(id);
+  document.getElementsByName('fname')[1].value = person.firstName;
+  document.getElementsByName('lname')[1].value = person.lastName;
+  document.getElementsByName('born')[1].value = person.dateOfBirth;
 }
 
 // function setPersonInformation(index, x) {

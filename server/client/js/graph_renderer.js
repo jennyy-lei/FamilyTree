@@ -1,5 +1,7 @@
 'use strict';
 
+// Class for managing the relationship graph renderer. Currently wraps around
+// the Cytoscape library.
 export class GraphRenderer {
   constructor(rootElement, peopleRepository) {
     this.peopleRepository = peopleRepository;
