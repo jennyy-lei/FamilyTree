@@ -11,8 +11,7 @@ export class PersonRepository {
 
   addPerson(person) {
     if (this._people.has(person.id)) {
-      console.log(
-          `Could not add person, ID ${person.id} already exists`);
+      console.log(`Could not add person, ID ${person.id} already exists`);
       return false;
     }
 
@@ -24,8 +23,7 @@ export class PersonRepository {
     if (!this._people.has(relationship.leftId)
         || !this._people.has(relationship.rightId)) {
       console.log(
-          'Could not add relationship, left or right person ' +
-              'ID does not exist');
+          'Could not add relationship, left or right person ID does not exist');
       return false;
     }
 

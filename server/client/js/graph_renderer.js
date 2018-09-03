@@ -1,30 +1,65 @@
 'use strict';
 
 export class GraphRenderer {
-  constructor(canvas, people) {
-    let _this = this;
-    this._canvas = canvas;
-    this._people = people;
+  constructor(rootElement, peopleRepository) {
+    this.peopleRepository = peopleRepository;
+    this.rootElement = rootElement;
 
-    window.addEventListener('resize', function () {
-      _this.updateCanvasSize();
+    this.setUpCytoscape();
+  }
+
+  setUpCytoscape() {
+    this.cy = cytoscape({
+      container: this.rootElement,
+
+      elements: [],
+
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'content': 'data(name)',
+            'background-color': 'white',
+            'text-halign': 'center',
+            'text-valign': 'center',
+            'shape': 'roundrectangle',
+            'width': '50px',
+            'height': '25px',
+            'border-width': '1px',
+            'border-style': 'solid',
+            'border-color': 'lightgrey',
+            'font-family': 'Lato',
+            'font-weight': '300',
+            'font-size': '20',
+            'padding': '15'
+          }
+        }, {
+          selector: 'edge',
+          style: {
+            'width': 3,
+            'line-color': '#ccc',
+            'target-arrow-color': '#ccc',
+            'target-arrow-shape': 'triangle'
+          }
+        }
+      ],
     });
-    this.updateCanvasSize();
   }
 
-  updateCanvasSize() {
-    this._canvas.width = this._canvas.offsetWidth;
-    this._canvas.height = this._canvas.offsetHeight;
-    this.redraw();
+  onNodeClick(callback) {
+    this.cy.on('click', 'node', callback);
   }
 
-  redraw() {
-    let ctx = this._canvas.getContext('2d');
-
-    if (this._people.length == 0) return;
-
-    for (let person of this._people) {
-
-    }
+  // Creates person card
+  createCard(person) {
+    this.cy.add([
+      {
+        data: {
+          id: person.id,
+          name: `${person.firstName} ${person.lastName}`
+        },
+        position: { x: 500, y: 200}
+      }
+    ]);
   }
 }
