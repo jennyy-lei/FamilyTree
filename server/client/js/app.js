@@ -74,10 +74,19 @@ createRelationBtn.onclick = function() {
 
   // 1. check for presence of pair -> make sure they exist -> if not show
   // warning message
-  for (let i = 0; i < people.length; i++){
-    if (pair.toLowerCase() ==
-        `${people[i].firstName.toLowerCase()} ${people[i].lastName.toLowerCase()}`) {
-      pairIndex = i;
+  // for (let i = 0; i < people.length; i++){
+  //   if (pair.toLowerCase() ==
+  //       `${personRepository._people[i].firstName.toLowerCase()} ${personRepository._people[i].lastName.toLowerCase()}`) {
+  //     pairIndex = i;
+  //     console.log('found person!');
+  //     exists = true;
+  //     break;
+  //   }
+  // }
+  for (let x of personRepository.getPeopleId()) {
+    let person = personRepository.getPerson(x);
+    if (`${person.firstName.toLowerCase()} ${person.lastName.toLowerCase()}` == pair.toLowerCase()) {
+      pairIndex = x;
       console.log('found person!');
       exists = true;
       break;
@@ -103,10 +112,10 @@ createRelationBtn.onclick = function() {
     }
   }
 
-  // addRelation(selectedCard, selectedType, pairIndex);
+  addRelation(selectedCard, selectedType, pairIndex);
 
   // 4. find pair and add opposite relation to them
-  // addRelation(pairIndex, oppositeRelation(selectedType), selectedCard);
+  addRelation(pairIndex, oppositeRelation(selectedType), selectedCard);
 
   // 5. Exits create relations form
   document.getElementsByClassName('relations')[1].style.opacity = 0;
@@ -138,7 +147,7 @@ createRelationBtn.onclick = function() {
 // }
 
 function addRelation(card, selectedType, pairIndex) {
-  const person = people[card];
+  const person = personRepository.getPerson(card);
   const newRelationship = person.addRelationship(
       new Relationship(selectedType, pairIndex));
   personRepository.addRelationship(newRelationship);
@@ -174,6 +183,7 @@ function changeSidebar() {
 }
 
 function openEditScreen(id) {
+  selectedCard = id;
   document.getElementById('edit-container').style.top = '80px';
   fillSelectedInformation(id);
   // loadRelationsTable();

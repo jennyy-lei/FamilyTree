@@ -35,6 +35,8 @@ export class PersonRepository {
 
   get people() { return this._people.values(); }
 
+  getPeopleId() { return this._people.keys; }
+
   getPerson(id) { return this._people.get(id); }
 
   addPeopleChangeListener(listener) { this._people.addListener(listener); }
