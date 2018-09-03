@@ -4,30 +4,37 @@
 // a pub-sub interface for clients to subscribe to changes events to the
 // collection.
 export class ObservableCollection {
-  constructor() {
+  constructor({async = true}) {
     // List of subscriber function callbacks invoked when change occurs.
     this._subscribers = new Set();
+    this._async = async;
   }
 
   // Subscribes to change events. Change event handlers are deduped, so 2 of the
   // same handlers will only trigger once.
-  attachListener(callback) {
+  addListener(callback) {
     this._subscribers.add(callback);
   }
 
-  detachListener(callback) {
+  removeListener(callback) {
     this._subscribers.remove(callback);
   }
 
   onChange(event) {
-    for (let subscriber of this._subscribers) subscriber(event);
+    for (let subscriber of this._subscribers) {
+      if (this._async) {
+        setTimeout(subscriber.bind(window, event), 0);
+      } else {
+        subscriber(event);
+      }
+    }
   }
 }
 
 // Observable list implementation.
 export class ObservableList extends ObservableCollection {
-  constructor() {
-    super();
+  constructor({async = true} = {}) {
+    super({async: async});
     this._backingList = [];
   }
 
@@ -41,8 +48,8 @@ export class ObservableList extends ObservableCollection {
 
 // Observable map implementation.
 export class ObservableMap extends ObservableCollection {
-  constructor() {
-    super();
+  constructor({async = true} = {}) {
+    super({async: async});
     this._backingMap = new Map();
   }
 
@@ -53,7 +60,7 @@ export class ObservableMap extends ObservableCollection {
     // If the key already exists, then the value is overwritten with the new
     // value and the old value is listed as a `removed` value in the change
     // event.
-    let removed = [];
+    const removed = [];
     if (this._backingMap.has(key)) removed.push(this._backingMap[key]);
 
     this._backingMap.set(key, value);

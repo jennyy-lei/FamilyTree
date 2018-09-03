@@ -37,6 +37,11 @@ export class PersonRepository {
 
   getPerson(id) { return this._people.get(id); }
 
+  addPeopleChangeListener(listener) { this._people.addListener(listener); }
+  addRelationshipsChangeListener(listener) {
+    this.relationships.addListener(listener);
+  }
+
   // Add convenience methods here:
   getChildrenOf(personId) { return null; }
   getParentsOf(personId) { return null; }

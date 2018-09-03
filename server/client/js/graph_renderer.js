@@ -7,10 +7,11 @@ export class GraphRenderer {
     this.peopleRepository = peopleRepository;
     this.rootElement = rootElement;
 
-    this.setUpCytoscape();
+    this._setUpCytoscape();
+    this._setUpListeners();
   }
 
-  setUpCytoscape() {
+  _setUpCytoscape() {
     this.cy = cytoscape({
       container: this.rootElement,
 
@@ -48,12 +49,19 @@ export class GraphRenderer {
     });
   }
 
+  _setUpListeners() {
+    const _this = this;
+    this.peopleRepository.addPeopleChangeListener(function (event) {
+      event.added.forEach(_this._createCard.bind(_this));
+    });
+  }
+
   onNodeClick(callback) {
     this.cy.on('click', 'node', callback);
   }
 
-  // Creates person card
-  createCard(person) {
+  // Creates person card.
+  _createCard(person) {
     this.cy.add([
       {
         data: {

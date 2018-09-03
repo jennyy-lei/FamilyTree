@@ -51,7 +51,6 @@ closeFormBtn.onclick = function() {
 addPersonBtn.onclick = function() {
   const createdPerson = createPerson();
   clearForm();
-  graphRenderer.createCard(createdPerson);
   closeForm();
 }
 
