@@ -30,10 +30,15 @@ let editPages = document.getElementsByClassName('edit-area');
 
 let addRelationBtn = document.getElementById('show-create-relations');
 
+let pair = [];
+
 graphRenderer.onNodeClick(function () {
   let id = parseInt(this.id());
+
   console.log(id);
-  openEditScreen(id);
+
+  if (!toggleRelationship) openEditScreen(id);
+  else if (toggleRelationship && pair.length < 2) selectCards(pair, this);
 });
 
 window.onload = function() {
@@ -249,4 +254,31 @@ function getPersonInformation(x) {
     'lastName': document.getElementsByName('lname')[x].value,
     'dateOfBirth': document.getElementsByName('born')[x].value,
   };
+}
+
+let toggleRelationshipsBtn = document.getElementById('toggleRelationships');
+let toggleRelationship = false;
+
+toggleRelationships.onclick = function() {
+  if(this.classList.contains('toggled')) {
+    this.classList.remove('toggled');
+    toggleRelationship = false;
+    pair = [];
+    graphRenderer.getNodes().style('border-color', 'lightgrey');
+  } else {
+    this.classList.add('toggled');
+    toggleRelationship = true;
+  }
+}
+
+function selectCards(arr, node) {
+  arr.push(parseInt(node.id()));
+
+  node.style('border-color', 'tomato');
+
+  console.log(arr.length);
+
+  if (arr.length >= 2) {
+    console.log("MAKE RELATIONSHIP!");
+  }
 }

@@ -25,16 +25,16 @@ export class GraphRenderer {
             'background-color': 'white',
             'text-halign': 'center',
             'text-valign': 'center',
-            'shape': 'roundrectangle',
-            'width': '50px',
-            'height': '25px',
+            'shape': 'cutrectangle', // barrel, cutrectangle, roundrectangle, rectangle
+            'width': 'label',
+            'height': 'label',
             'border-width': '1px',
             'border-style': 'solid',
             'border-color': 'lightgrey',
             'font-family': 'Lato',
             'font-weight': '300',
             'font-size': '20',
-            'padding': '15'
+            'padding': '15px'
           }
         }, {
           selector: 'edge',
@@ -46,7 +46,7 @@ export class GraphRenderer {
           }
         }
       ],
-      zoomingEnabled: false
+      zoomingEnabled: false,
     });
   }
 
@@ -71,6 +71,8 @@ export class GraphRenderer {
   onNodeClick(callback) {
     this.cy.on('click', 'node', callback);
   }
+
+  getNodes() { return this.cy.nodes() }
 
   // Creates person card.
   _createCard(person) {
