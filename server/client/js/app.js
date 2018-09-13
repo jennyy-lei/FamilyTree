@@ -258,6 +258,8 @@ function getPersonInformation(x) {
 
 let toggleRelationshipsBtn = document.getElementById('toggleRelationships');
 let toggleRelationship = false;
+let quickAdd = document.getElementById('quickAdd');
+let quickAddBtn = document.getElementById('quickAddBtn');
 
 toggleRelationships.onclick = function() {
   if(this.classList.contains('toggled')) {
@@ -272,13 +274,43 @@ toggleRelationships.onclick = function() {
 }
 
 function selectCards(arr, node) {
-  arr.push(parseInt(node.id()));
+  let id = parseInt(node.id());
+
+  arr.push(id);
 
   node.style('border-color', 'tomato');
 
-  console.log(arr.length);
+  console.log(`${arr[0]}, ${arr[1]}`);
 
   if (arr.length >= 2) {
     console.log("MAKE RELATIONSHIP!");
+    quickAdd.classList.add('open');
+
+    document.getElementById('quickAddText').innerHTML = `
+      <p>${personRepository.getPerson(pair[0]).firstName} ${personRepository.getPerson(pair[0]).lastName} is the
+      <select id="typeSelector" style="margin: 0 5px;">
+        <option value="parent" selected>Parent</option>
+        <option value="child">Child</option>
+      </select>
+      of ${personRepository.getPerson(pair[1]).firstName} ${personRepository.getPerson(pair[1]).lastName}</p>
+    `
   }
+}
+
+quickAddBtn.onclick = function() {
+  console.log(document.getElementById('typeSelector').options);
+  let dropDown = document.getElementById('typeSelector');
+  let type = dropDown.options[dropDown.selectedIndex].text.toLowerCase();
+
+  console.log(type);
+  console.log(oppositeRelation(type));
+
+  quickAdd.classList.remove('open');
+
+  addRelation(pair[0], type, pair[1]);
+  addRelation(pair[1], oppositeRelation(type), pair[0]);
+
+  graphRenderer.getNodes().style('border-color', 'lightgrey');
+  toggleRelationships.classList.remove('toggled');
+  pair = [];
 }
