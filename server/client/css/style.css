@@ -299,6 +299,11 @@ input[type='radio'] {
 	display: inherit;
 }
 
+.quickAdd > button {
+	color: black;
+	width: 10em;
+}
+
 .open {
 	height: 25%;
 	width: 40%;

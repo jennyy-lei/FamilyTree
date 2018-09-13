@@ -314,3 +314,11 @@ quickAddBtn.onclick = function() {
   toggleRelationships.classList.remove('toggled');
   pair = [];
 }
+
+document.getElementById('cancelAddBtn').onclick = function() {
+  toggleRelationships.classList.remove('toggled');
+  quickAdd.classList.remove('open');
+  
+  graphRenderer.getNodes().style('border-color', 'lightgrey');
+  pair = [];
+}
