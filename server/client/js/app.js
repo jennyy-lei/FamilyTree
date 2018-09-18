@@ -61,7 +61,6 @@ addPersonBtn.onclick = function() {
 
 // Opens create relation screen
 addRelationBtn.onclick = function() {
-  console.log("open relations");
   document.getElementsByClassName('relations')[0].style.opacity = 0;
   document.getElementsByClassName('relations')[0].style.visibility = 'hidden';
 
@@ -72,22 +71,12 @@ addRelationBtn.onclick = function() {
 let createRelationBtn = document.querySelectorAll('input[value="CREATE"]')[0];
 
 createRelationBtn.onclick = function() {
-  console.log("sakhg");
   let pair = document.getElementsByName('pair')[0].value;
   let pairIndex = null;
   let exists = false;
 
   // 1. check for presence of pair -> make sure they exist -> if not show
   // warning message
-  // for (let i = 0; i < people.length; i++){
-  //   if (pair.toLowerCase() ==
-  //       `${personRepository._people[i].firstName.toLowerCase()} ${personRepository._people[i].lastName.toLowerCase()}`) {
-  //     pairIndex = i;
-  //     console.log('found person!');
-  //     exists = true;
-  //     break;
-  //   }
-  // }
   for (let x of personRepository.getPeopleId()) {
     let person = personRepository.getPerson(x);
     if (`${person.firstName.toLowerCase()} ${person.lastName.toLowerCase()}` == pair.toLowerCase()) {
@@ -104,10 +93,11 @@ createRelationBtn.onclick = function() {
   } else {
     document.getElementById('warning').style.opacity = 0;
   }
+
   // 2. check if this relation already exists -> dont show warning, but dont
   //    add either
-  // 3. if present, add relation to relations list in person class
 
+  // 3. if present, add relation to relations list in person class
   // Get selected relationship
   let selectedType = '';
   let radioBtns = document.getElementsByName('type');
@@ -162,6 +152,7 @@ function oppositeRelation(kind) {
   switch (kind) {
     case 'parent': return 'child';
     case 'child': return 'parent';
+    case 'partner': return 'partner';
   }
 }
 
@@ -291,6 +282,7 @@ function selectCards(arr, node) {
       <select id="typeSelector" style="margin: 0 5px;">
         <option value="parent" selected>Parent</option>
         <option value="child">Child</option>
+        <option value="partner">Partner</option>
       </select>
       of ${personRepository.getPerson(pair[1]).firstName} ${personRepository.getPerson(pair[1]).lastName}</p>
     `
@@ -298,12 +290,8 @@ function selectCards(arr, node) {
 }
 
 quickAddBtn.onclick = function() {
-  console.log(document.getElementById('typeSelector').options);
   let dropDown = document.getElementById('typeSelector');
-  let type = dropDown.options[dropDown.selectedIndex].text.toLowerCase();
-
-  console.log(type);
-  console.log(oppositeRelation(type));
+  let type = dropDown.options[dropDown.selectedIndex].value;
 
   quickAdd.classList.remove('open');
 
@@ -313,6 +301,7 @@ quickAddBtn.onclick = function() {
   graphRenderer.getNodes().style('border-color', 'lightgrey');
   toggleRelationships.classList.remove('toggled');
   pair = [];
+  toggleRelationship = false;
 }
 
 document.getElementById('cancelAddBtn').onclick = function() {
@@ -320,5 +309,6 @@ document.getElementById('cancelAddBtn').onclick = function() {
   quickAdd.classList.remove('open');
   
   graphRenderer.getNodes().style('border-color', 'lightgrey');
+  toggleRelationship = false;
   pair = [];
 }
