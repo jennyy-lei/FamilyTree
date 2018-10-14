@@ -32,13 +32,12 @@ let addRelationBtn = document.getElementById('show-create-relations');
 
 let pair = [];
 
-graphRenderer.onNodeClick(function () {
-  let id = parseInt(this.id());
-
-  console.log(id);
-
-  if (!toggleRelationship) openEditScreen(id);
-  else if (toggleRelationship && pair.length < 2) selectCards(pair, this);
+graphRenderer.onNodeClick(function (nodeData, nodeElement) {
+  if (!toggleRelationship) {
+    openEditScreen(nodeData.id);
+  } else if (toggleRelationship && pair.length < 2) {
+    selectCards(pair, nodeData, nodeElement);
+  }
 });
 
 window.onload = function() {
@@ -264,12 +263,10 @@ toggleRelationships.onclick = function() {
   }
 }
 
-function selectCards(arr, node) {
-  let id = parseInt(node.id());
+function selectCards(arr, nodeData, nodeElement) {
+  arr.push(nodeData.id);
 
-  arr.push(id);
-
-  node.style('border-color', 'tomato');
+  nodeElement.style('border-color', 'tomato');
 
   console.log(`${arr[0]}, ${arr[1]}`);
 
@@ -278,13 +275,18 @@ function selectCards(arr, node) {
     quickAdd.classList.add('open');
 
     document.getElementById('quickAddText').innerHTML = `
-      <p>${personRepository.getPerson(pair[0]).firstName} ${personRepository.getPerson(pair[0]).lastName} is the
-      <select id="typeSelector" style="margin: 0 5px;">
-        <option value="parent" selected>Parent</option>
-        <option value="child">Child</option>
-        <option value="partner">Partner</option>
-      </select>
-      of ${personRepository.getPerson(pair[1]).firstName} ${personRepository.getPerson(pair[1]).lastName}</p>
+      <p>
+        ${personRepository.getPerson(pair[0]).firstName}
+        ${personRepository.getPerson(pair[0]).lastName} is the
+        <select id="typeSelector" style="margin: 0 5px;">
+          <option value="parent" selected>Parent</option>
+          <option value="child">Child</option>
+          <option value="partner">Partner</option>
+        </select>
+        of
+        ${personRepository.getPerson(pair[1]).firstName}
+        ${personRepository.getPerson(pair[1]).lastName}
+      </p>
     `
   }
 }
@@ -307,7 +309,7 @@ quickAddBtn.onclick = function() {
 document.getElementById('cancelAddBtn').onclick = function() {
   toggleRelationships.classList.remove('toggled');
   quickAdd.classList.remove('open');
-  
+
   graphRenderer.getNodes().style('border-color', 'lightgrey');
   toggleRelationship = false;
   pair = [];

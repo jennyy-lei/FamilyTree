@@ -1,11 +1,18 @@
 'use strict';
 
+function nodeId(id) { return `node:${id}` }
+function edgeId(id1, id2) { return `edge:${id1}-${id2}` }
+
 // Class for managing the relationship graph renderer. Currently wraps around
 // the Cytoscape library.
 export class GraphRenderer {
   constructor(rootElement, peopleRepository) {
     this.peopleRepository = peopleRepository;
     this.rootElement = rootElement;
+
+    // Cache of string node-id to nodes, allows us to do reverse lookups given
+    // a formatted node ID.
+    this._cachedNodes = new Map();
 
     this._setUpCytoscape();
     this._setUpListeners();
@@ -25,7 +32,8 @@ export class GraphRenderer {
             'background-color': 'white',
             'text-halign': 'center',
             'text-valign': 'center',
-            'shape': 'cutrectangle', // barrel, cutrectangle, roundrectangle, rectangle
+             // barrel, cutrectangle, roundrectangle, rectangle
+            'shape': 'cutrectangle',
             'width': 'label',
             'height': 'label',
             'border-width': '1px',
@@ -52,6 +60,7 @@ export class GraphRenderer {
 
   _setUpListeners() {
     const _this = this;
+
     this.peopleRepository.addPeopleChangeListener(function (event) {
       // Add any new people as cards to the graph.
       event.added.forEach(_this._createCard.bind(_this));
@@ -66,20 +75,38 @@ export class GraphRenderer {
           })
           .run();
     });
+
+    this.peopleRepository.addRelationshipsChangeListener(function (event) {
+      for (let added of event.added) {
+        _this._createRelationship(added.leftId, added.rightId);
+      }
+
+      for (let removed of event.removed) {
+
+      }
+    });
   }
 
   onNodeClick(callback) {
-    this.cy.on('click', 'node', callback);
+    const _this = this;
+
+    this.cy.on('click', 'node', function () {
+      callback(_this._cachedNodes.get(this.id()), this);
+    });
   }
 
   getNodes() { return this.cy.nodes() }
 
   // Creates person card.
   _createCard(person) {
+    const id = nodeId(person.id);
+
+    this._cachedNodes.set(id, person);
+
     this.cy.add([
       {
         data: {
-          id: person.id,
+          id: id,
           name: `${person.firstName} ${person.lastName}`
         },
         // position: { x: 500, y: 200}
@@ -88,6 +115,23 @@ export class GraphRenderer {
   }
 
   _removeCard(person) {
-    this.cy.remove(`#${person.id}`);
+    const id = nodeId(person.id);
+
+    this._cachedNodes.delete(id);
+
+    this.cy.remove(`#${id}`);
+  }
+
+  // Links 2 person cards together for a relationship.
+  _createRelationship(p1Id, p2Id) {
+    this.cy.add([
+      {
+        data: {
+          id: edgeId(p1Id, p2Id),
+          source: nodeId(p1Id),
+          target: nodeId(p2Id)
+        }
+      }
+    ]);
   }
 }
