@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Family Tree</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+
+  <body>
+    <h1>Family Tree</h1>
+
+    <div id="expand-form">
+      <img src="res/add.svg"/>
+    </div>
+
+    <button id="toggleRelationships" class="toggleRelationships" type="button">Add Relationships</button>
+    <div id="quickAdd" class="quickAdd">
+      <div id="quickAddText"></div>
+
+      <button id="quickAddBtn">ADD</button>
+      <button id="cancelAddBtn">CANCEL</button>
+    </div>
+
+    <!-- ADD PERSON FORM: -->
+    <div id="add-person-container">
+      <form id="add-person-form">
+        <fieldset>
+          <legend>Information:</legend>
+          <p>First Name:</p>
+          <input type="text" name="fname">
+          <p>Last Name:</p>
+          <input type="text" name="lname">
+          <p>Year Born:</p>
+          <input type="number" name="born">
+          <input type="button" value="ADD" id="submit-person">
+          <input type="button" value="CLOSE" id="close-form">
+        </fieldset>
+      </form>
+    </div>
+
+    <!-- DIV AREA: -->
+    <div id="edit-container">
+      <div id="close-edit">
+        <img src="res/close.svg">
+      </div>
+
+      <div id="edit-sidebar">
+        <ul>
+          <li class="edit-sidebar-items" style="font-weight: normal;">
+            Information</li>
+          <li class="edit-sidebar-items ">Relations</li>
+        </ul>
+      </div>
+
+      <div
+          id="edit-information"
+          class="edit-area"
+          style="visibility: visible; opacity: 1;">
+        <form id="edit-person-form">
+          <fieldset>
+            <legend>Information:</legend>
+            <p>First Name:</p>
+            <input type="text" name="fname">
+            <p>Last Name:</p>
+            <input type="text" name="lname">
+            <p>Year Born:</p>
+            <input type="number" name="born">
+            <input type="button" value="SAVE" id="save-edit">
+            <p class="warning" id="saved-text">SAVED</p>
+          </fieldset>
+        </form>
+      </div>
+
+      <div id="edit-relations" class="edit-area">
+        <div
+            id="relations-list"
+            class="relations"
+            style="visibility: visible; opacity: 1;">
+          <div id="show-create-relations">
+            <img src="res/add.svg" id="add-relation-btn">
+          </div>
+          <table id="relations-table">
+            <tr>
+              <td>Person:</td>
+              <td>Type:</td>
+            </tr>
+          </table>
+        </div>
+        <div id="create-relations-container" class="relations">
+          <form>
+            <fieldset>
+              <legend>Create relation:</legend>
+              <p>Pair:</p>
+              <input type="text" name="pair">
+
+              <input type="radio" name="type" value="parent">Parent<br>
+              <input type="radio" name="type" value="child">Child<br>
+              <input type="radio" name="type" value="partner">Partner<br>
+
+              <p id="warning" class="warning">Person does not exist!</p>
+
+              <input type="button" value="CREATE">
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="map-container"></div>
+    <script src="js/cytoscape.js" type="text/javascript"></script>
+    <script src="dist/js/app.js" type="module"></script>
+  </body>
+</html>

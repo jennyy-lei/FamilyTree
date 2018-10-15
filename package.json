@@ -2,9 +2,12 @@
   "name": "familytree",
   "version": "1.0.0",
   "description": "Family tree builder",
-  "main": "index.js",
+  "main": "dist/server",
+  "types": "dist/server",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "deploy": "tsc -p client && tsc -p server",
+    "dev": "concurrently 'tsc -w -p client' 'tsc -w -p server' 'nodemon dist/server.js'"
   },
   "repository": {
     "type": "git",
@@ -18,5 +21,13 @@
   "homepage": "https://github.com/jennyy-lei/FamilyTree#readme",
   "dependencies": {
     "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "@types/cytoscape": "^3.2.7",
+    "@types/express": "^4.16.0",
+    "@types/node": "^10.11.7",
+    "nodemon": "^1.18.4",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.1.3"
   }
 }
