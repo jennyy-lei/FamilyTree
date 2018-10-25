@@ -7,7 +7,7 @@
   "scripts": {
     "test": "test",
     "deploy": "tsc -p client && tsc -p server",
-    "dev": "concurrently 'tsc -w -p client' 'tsc -w -p server' 'nodemon dist/server.js'"
+    "dev": "node_modules/concurrently/bin/concurrently.js 'tsc -w -p client' 'tsc -w -p server' 'nodemon dist/server.js'"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/jennyy-lei/FamilyTree#readme",
   "dependencies": {
+    "concurrently": "^4.0.1",
     "express": "^4.16.3"
   },
   "devDependencies": {
